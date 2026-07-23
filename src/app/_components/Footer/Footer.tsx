@@ -59,23 +59,35 @@ async function Footer({ canEditSpecialCmsImage }: PropTypes) {
             </div>
             <div className={styles.sponsors}>
                 <SpecialCmsImage
+                    className={styles.mainPartner}
                     canEdit={canEditSpecialCmsImage}
                     special="FOOTER_2"
                     width={170}
                     readSpecialCmsImageAction={readSpecialCmsImageFrontpage}
                     updateCmsImageAction={updateSpecialCmsImageFrontpage}
                 >
-                    <Link href="http://www.nordicsemi.com" target="_blank" />
+                    <Link href="http://www.nordicsemi.com" target="_blank" aria-label="Nordic Semiconductor" />
                 </SpecialCmsImage>
-                <SpecialCmsImage
-                    canEdit={canEditSpecialCmsImage}
-                    special="FOOTER_3"
-                    width={100}
-                    readSpecialCmsImageAction={readSpecialCmsImageFrontpage}
-                    updateCmsImageAction={updateSpecialCmsImageFrontpage}
-                >
-                    <Link href="http://www.kongsberg.com" target="_blank" />
-                </SpecialCmsImage>
+                <div className={styles.standardPartners}>
+                    <SpecialCmsImage
+                        canEdit={canEditSpecialCmsImage}
+                        special="FOOTER_3"
+                        width={70}
+                        readSpecialCmsImageAction={readSpecialCmsImageFrontpage}
+                        updateCmsImageAction={updateSpecialCmsImageFrontpage}
+                    >
+                        <Link href="http://www.kongsberg.com" target="_blank" aria-label="Kongsberg" />
+                    </SpecialCmsImage>
+                    <SpecialCmsImage
+                        canEdit={canEditSpecialCmsImage}
+                        special="FOOTER_4"
+                        width={70}
+                        readSpecialCmsImageAction={readSpecialCmsImageFrontpage}
+                        updateCmsImageAction={updateSpecialCmsImageFrontpage}
+                    >
+                        <Link href="https://www.capgemini.com" target="_blank" aria-label="Capgemini" />
+                    </SpecialCmsImage>
+                </div>
             </div>
         </footer>
     )

@@ -19,6 +19,7 @@ const ownedCmsImages: Readonly<SpecialCmsImage[]> = [
     'FOOTER_1',
     'FOOTER_2',
     'FOOTER_3',
+    'FOOTER_4',
     'FOOTER_LOGO',
     'FRONTPAGE_LOGO',
     //TODO: these probably should not be read through 'frontpage'-service...

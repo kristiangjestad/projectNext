@@ -114,6 +114,10 @@ export const seedSpecialCmsImageConfig: CmsImageSeedSpecialConfig = {
         name: 'footer_3',
         imageName: 'kongsberg',
     },
+    FOOTER_4: {
+        name: 'footer_4',
+        imageName: 'capgemini',
+    },
     LOADER_IMAGE: {
         name: 'loader_image',
         imageName: 'logo_simple'
