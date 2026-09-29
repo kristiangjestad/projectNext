@@ -39,8 +39,6 @@ model ScreenPage {
   id               Int                @id @default(autoincrement())
   name             String             @unique
   type             ScreenPageType
-  jobAd            JobAd?             @relation(fields: [jobAdId], references: [id])
-  jobAdId          Int?
   cmsImage         CmsImage           @relation(fields: [cmsImageId], references: [id])
   cmsImageId       Int                @unique
   cmsParagraph     CmsParagraph       @relation(fields: [cmsParagraphId], references: [id])

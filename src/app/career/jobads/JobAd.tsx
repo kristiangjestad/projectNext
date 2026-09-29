@@ -1,52 +1,28 @@
 import styles from './JobAd.module.scss'
-import Image from '@/components/Image/Image'
-import { formatVevenUri } from '@/lib/urlEncoding'
-import { jobAdType } from '@/services/career/jobAds/constants'
+import Image from 'next/image'
 import Link from 'next/link'
 import type { SimpleJobAd } from '@/services/career/jobAds/types'
 
-type PropTypes = {
-    jobAd: SimpleJobAd
-}
-
 const months = ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des']
 
-export default function JobAd({ jobAd }: PropTypes) {
-    const deadline = jobAd.applicationDeadline
-
+export default function JobAd({ jobAd }: { jobAd: SimpleJobAd }) {
+    const deadline = jobAd.deadline.split('-')
     return (
-        <Link
-            href={`/career/jobads/${formatVevenUri(jobAd.articleName, jobAd.id)}`}
-            className={styles.JobAd}
-        >
+        <Link href={`/career/jobads/${jobAd.slug}`} className={styles.JobAd}>
             <div className={styles.thumb}>
-                {jobAd.coverImage && (
-                    <Image
-                        disableLinkingToLicense
-                        creditPlacement="top"
-                        width={200}
-                        image={jobAd.coverImage}
-                    />
-                )}
+                {jobAd.logo_url && <Image src={jobAd.logo_url} alt={jobAd.company_name}
+                    width={200} height={120} unoptimized className={styles.logo} />}
             </div>
-
             <div className={styles.lead}>
-                {deadline ? <>
-                    <b>{deadline.getDate()}</b>
-                    <span>{months[deadline.getMonth()]}</span>
-                </> : (
-                    <span className={styles.noDeadline}>Løpende</span>
-                )}
+                <b>{Number(deadline[2])}</b>
+                <span>{months[Number(deadline[1]) - 1]}</span>
             </div>
-
             <div className={styles.main}>
-                <h2>{jobAd.articleName}</h2>
-                <p>{jobAd.companyName} — {jobAdType[jobAd.type].label}</p>
+                <h2>{jobAd.title}</h2>
+                <p>{jobAd.company_name}{jobAd.employment_label && `, ${jobAd.employment_label}`}</p>
             </div>
-
             <div className={styles.meta}>
                 {jobAd.location && <span>{jobAd.location}</span>}
-                {!jobAd.active && <span className={styles.inactive}>Inaktiv</span>}
             </div>
         </Link>
     )

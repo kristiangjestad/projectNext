@@ -118,7 +118,6 @@ model Article {
   articleCategoryName String?
   coverImage          CmsImage           @relation(fields: [coverImageId], references: [id], onDelete: Restrict)
   coverImageId        Int                @unique
-  JobAd               JobAd?
   Committee           Committee?
   special             SpecialCmsArticle? @unique
 

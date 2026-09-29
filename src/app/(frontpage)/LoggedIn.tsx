@@ -27,8 +27,8 @@ export default async function LoggedInLandingPage() {
     const MAX_NUMBER_OF_ELEMENTS = 3
     const news = unwrapActionReturn(await readNewsCurrentAction())
         .slice(0, MAX_NUMBER_OF_ELEMENTS)
-    const jobAds = unwrapActionReturn(await readActiveJobAdsAction())
-        .slice(0, MAX_NUMBER_OF_ELEMENTS)
+    const jobAdsResponse = await readActiveJobAdsAction()
+    const jobAds = jobAdsResponse.success ? jobAdsResponse.data.slice(0, MAX_NUMBER_OF_ELEMENTS) : []
     const events = unwrapActionReturn(await readCurrentEventsAction({ params: { tags: null } }))
         .slice(0, MAX_NUMBER_OF_ELEMENTS)
 
@@ -104,9 +104,9 @@ export default async function LoggedInLandingPage() {
                             span="half"
                             emptyMessage="Det er for tiden ingen jobbannonser"
                         >
-                            {jobAds.map((jobAd, key) => (
-                                <JobAd key={key} jobAd={jobAd} />
-                            ))}
+                            {jobAdsResponse.success ? jobAds.map(jobAd => (
+                                <JobAd key={jobAd.id} jobAd={jobAd} />
+                            )) : <p>Kunne ikke hente jobbannonsene. Prøv igjen senere.</p>}
                         </LoggedInSection>
                         {canReadOmbul && (
                             <LoggedInSection
