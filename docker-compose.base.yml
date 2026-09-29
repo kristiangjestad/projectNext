@@ -9,6 +9,7 @@ services:
             dockerfile: ${PROJECT_ROOT:-.}/Dockerfile
         environment:
             DB_URI: ${DB_URI}
+            CONTACTOR_API_URL: ${CONTACTOR_API_URL:-https://api.contactor.no}
             MIGRATE_FROM_OW: ${MIGRATE_FROM_OW}
             OW_STORE_URL: ${OW_STORE_URL}
             OW_DB_URI: ${OW_DB_URI}

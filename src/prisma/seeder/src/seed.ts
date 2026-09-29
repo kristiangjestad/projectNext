@@ -16,7 +16,6 @@ import seedDevSchools from './development/seedDevSchools'
 import seedDevCompanies from './development/seedDevCompanies'
 import seedShop from './seedShop'
 import seedDevShop from './development/seedDevShop'
-import seedDevJobAds from './development/seedDevJobAds'
 import seedDevEvents from './development/seedDevEvents'
 import seedEvents from './seedEvent'
 import seedCabin from './seedCabin'
@@ -86,7 +85,6 @@ export default async function seed(
         await step('Seeding development lockers', () => seedDevLockers(prisma))
         await step('Seeding development schools', () => seedDevSchools(prisma))
         await step('Seeding development companies', () => seedDevCompanies(prisma))
-        await step('Seeding development job ads', () => seedDevJobAds(prisma))
         await step('Seeding development shops', () => seedDevShop(prisma))
         await step('Seeding development events', () => seedDevEvents(prisma))
         await step('Seeding development applications and periods', () => seedDevApplicationsAndPeriods(prisma))

@@ -1,45 +1,28 @@
-import { Zpn } from '@/lib/fields/zpn'
-import { readPageInputSchemaObject } from '@/lib/paging/schema'
-import { JobType } from '@/prisma-generated-pn-types'
 import { z } from 'zod'
 
-const baseSchema = z.object({
-    companyId: z.coerce.number({
-        errorMap: () => ({ message: 'Velg en bedrift' }),
-    }).int().positive().int(),
-    articleName: z.string().max(50, 'max lengde 50').min(2, 'min lengde 2'),
-    description: z.string().max(200, 'max lengde 200').min(2, 'min lengde 2').or(z.literal('')),
-    type: z.nativeEnum(JobType),
-    applicationDeadline: Zpn.date({ label: 'Søknadsfrist' }),
-    active: Zpn.checkboxOrBoolean({ label: 'Aktiv' }),
-    location: z.string().optional(),
+const httpsUrl = z.string().url().refine(value => new URL(value).protocol === 'https:')
+const nullableText = z.string().nullable().optional()
+
+export const contactorJobSchema = z.object({
+    id: z.string(),
+    slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+    title: z.string(),
+    company_id: z.string(),
+    company_name: z.string(),
+    // The logo is decoration; an unusable one drops the logo, not the ad.
+    logo_url: httpsUrl.nullable().optional().catch(null),
+    location: nullableText,
+    employment_type: nullableText,
+    employment_label: nullableText,
+    deadline: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    published_at: nullableText,
+    apply_url: httpsUrl,
+})
+
+export const contactorJobDetailSchema = contactorJobSchema.extend({
+    body_html: z.string().nullable(),
 })
 
 export const jobAdSchemas = {
-    create: baseSchema.pick({
-        companyId: true,
-        articleName: true,
-        description: true,
-        type: true,
-        applicationDeadline: true,
-        location: true,
-    }),
-    update: baseSchema.partial().pick({
-        companyId: true,
-        description: true,
-        type: true,
-        applicationDeadline: true,
-        active: true,
-        location: true,
-    }),
-    readInactivePage: readPageInputSchemaObject(
-        z.number(),
-        z.object({
-            id: z.number(),
-        }),
-        z.object({
-            name: z.string().nullable(),
-            type: z.nativeEnum(JobType).nullable(),
-        }),
-    ),
-}
+    read: z.object({ slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/) }),
+} as const

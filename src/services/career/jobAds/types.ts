@@ -1,23 +1,5 @@
-import type { jobAdSchemas } from './schemas'
-import type { CompanyExpanded } from '@/services/career/companies/types'
-import type { ExpandedArticle } from '@/cms/articles/types'
-import type { InferPagingCursor, InferPagingDetails } from '@/lib/paging/schema'
-import type { JobAd } from '@/prisma-generated-pn-types'
-import type { ExpandedImage } from '@/services/images/subservice/types'
-export type ExpandedJobAd = JobAd & {
-    article: ExpandedArticle,
-    company: CompanyExpanded,
-}
+import type { z } from 'zod'
+import type { contactorJobSchema, contactorJobDetailSchema } from './schemas'
 
-/*
-* This type is used to represent a job ad with a coverImage and companyName
-* Used for displaying job ads in a list (read many methods)
-*/
-export type SimpleJobAd = JobAd & {
-    coverImage: ExpandedImage | null
-    companyName: string,
-}
-
-export type JobAdInactiveCursor = InferPagingCursor<typeof jobAdSchemas.readInactivePage>
-
-export type JobAdInactiveDetails = InferPagingDetails<typeof jobAdSchemas.readInactivePage>
+export type SimpleJobAd = z.infer<typeof contactorJobSchema>
+export type ExpandedJobAd = z.infer<typeof contactorJobDetailSchema>
